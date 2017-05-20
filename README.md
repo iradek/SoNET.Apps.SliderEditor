@@ -1,8 +1,8 @@
 # SoNET.Apps.SliderEditor
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+Sample SoNET App that uses [SoNET.AppsKit](https://github.com/iradek/SoNET.AppsKit).
 
-## Development server
+## Running
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 

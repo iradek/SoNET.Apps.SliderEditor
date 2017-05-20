@@ -1,0 +1,71 @@
+<form [formGroup]="editSliderForm" class="form-horizontal">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Edit Slider</legend>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Enabled">State:</label>
+            <div class="col-md-4">
+                <label class="radio-inline">
+                    <input type="radio" name="Disabled" formControlName="Disabled" [value]="false">Enabled</label>
+                <label class="radio-inline">
+                    <input type="radio" name="Disabled" formControlName="Disabled" [value]="true">Disabled</label>
+            </div>
+        </div>
+
+        <!-- Appended Input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Height">Height:</label>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input id="txtHeight" class="form-control" placeholder="" formControlName="Height" type="text" required>
+                    <span class="input-group-addon">px</span>
+                </div>
+            </div>            
+            <sonet-validation-message [control]="editSliderForm.controls['Height']"></sonet-validation-message>
+        </div>
+        <!-- Appended Input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Interval">Interval:</label>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input id="txtInterval" class="form-control" placeholder="" formControlName="Interval" type="text" required>
+                    <span class="input-group-addon">seconds</span>
+                </div>
+                <p class="help-block">For how long each slide is displayed</p>
+            </div>
+            <sonet-validation-message [control]="editSliderForm.controls['Interval']"></sonet-validation-message>
+        </div>
+        <!-- Multiple Radios -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="ShowPrevNext">Previous/Next:</label>
+            <div class="col-md-4">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="ShowPrevNext" [value]="true" formControlName="ShowPrevNext">Show</label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="ShowPrevNext" [value]="false" formControlName="ShowPrevNext">Hide</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multiple Radios -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="ShowSlideIndicators">Slide Indicators:</label>
+            <div class="col-md-4">
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="ShowSlideIndicators" [value]="true" formControlName="ShowSlideIndicators">Show</label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input type="radio" name="ShowSlideIndicators" [value]="false" formControlName="ShowSlideIndicators">Hide</label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>

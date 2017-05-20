@@ -1,6 +1,6 @@
 {
-  "name": "so-net.apps.slider-editor",
-  "version": "0.0.0",
+  "name": "sonet.apps.slider-editor",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -20,8 +20,12 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "primeng": "^4.0.0-rc.3",
     "rxjs": "^5.1.0",
+    "sonet-appskit": "^0.3.9",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
@@ -35,12 +39,12 @@
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^0.2.0",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "~2.2.0"
+    "typescript": "^2.3.2"
   }
 }

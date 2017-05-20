@@ -1,0 +1,18 @@
+﻿<p-accordion>
+    <p-accordionTab header="General Slider Preferences" [selected]="true">
+      <sonet-editSlider #editSlider></sonet-editSlider>
+    </p-accordionTab>
+    <p-accordionTab header="Slide #1">
+        Content 2
+    </p-accordionTab>
+    <p-accordionTab header="Slider #2">
+        Content 3    
+    </p-accordionTab>
+</p-accordion>
+
+<p>
+    <input class="btn btn-danger" type="button" (click)="sliderSaved()" value="Save Slider"/>
+</p>
+<pre>
+{{objectFromApi|json }}
+</pre>
