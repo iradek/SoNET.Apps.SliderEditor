@@ -18,10 +18,11 @@ import { EditSlider } from "./controls/editSlider";
 
 import { Config } from "../apps.config";
 import { AppComponent } from "./app.component";
+import { EditSliderItemComponent } from './edit-slider-item/edit-slider-item.component';
 
 @NgModule({
     imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, AccordionModule],
-    declarations: [AppComponent, EditSlider],
+    declarations: [AppComponent, EditSlider, EditSliderItemComponent],
     providers: [
         SliderApiClient,
         OAuthService,

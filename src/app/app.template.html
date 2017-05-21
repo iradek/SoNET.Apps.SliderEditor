@@ -3,15 +3,15 @@
       <sonet-editSlider #editSlider></sonet-editSlider>
     </p-accordionTab>
     <p-accordionTab header="Slide #1">
-        Content 2
+        <sonet-edit-slider-item></sonet-edit-slider-item>
     </p-accordionTab>
     <p-accordionTab header="Slider #2">
-        Content 3    
+        <sonet-edit-slider-item></sonet-edit-slider-item>
     </p-accordionTab>
 </p-accordion>
 
 <p>
-    <input class="btn btn-danger" type="button" (click)="sliderSaved()" value="Save Slider"/>
+    <input class="btn btn-danger" [disabled]="!editSlider.valid" type="button" (click)="sliderSaved()" value="Save Slider"/>
 </p>
 <pre>
 {{objectFromApi|json }}

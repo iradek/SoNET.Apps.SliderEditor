@@ -25,8 +25,10 @@ export class AppComponent {
   }
 
   sliderSaved() {
-    let slider = this.editSliderControl.getSlider();  
-    let savedSlider = this.apiClient.saveSliderAsync(slider);
+    let slider = this.editSliderControl.getSlider();
+    if (slider) {
+      let savedSlider = this.apiClient.saveSliderAsync(slider);
+    }
   }
 
 }

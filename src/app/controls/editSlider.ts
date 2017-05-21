@@ -12,6 +12,11 @@ import { ValidationService } from "sonet-appskit";
 export class EditSlider implements OnInit {
     
     private _slider : Slider;
+
+    get valid(): boolean  {
+        return this.editSliderForm && this.editSliderForm.valid;
+    }
+
     get slider(): Slider {
         if (!this._slider)
             this._slider = new Slider();
@@ -24,14 +29,14 @@ export class EditSlider implements OnInit {
     }
 
     getSlider() : Slider {
-        return this.editSliderForm.value;
+        return this.editSliderForm.valid ? this.editSliderForm.value : null;
     }
 
     editSliderForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {
-        this.slider.Disabled = true;
-        this.slider.ShowPrevNext = false;
+        this.slider.Disabled = false;
+        this.slider.ShowPrevNext = true;
     }
 
     ngOnInit() {
