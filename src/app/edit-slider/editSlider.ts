@@ -29,7 +29,8 @@ export class EditSlider implements OnInit {
     }
 
     getSlider() : Slider {
-        return this.editSliderForm.valid ? this.editSliderForm.value : null;
+        Object.assign(this.slider, this.editSliderForm.value);
+        return this.slider;
     }
 
     editSliderForm: FormGroup;

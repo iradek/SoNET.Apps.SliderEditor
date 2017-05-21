@@ -1,3 +1,5 @@
+import { SliderItem } from "app/models/sliderItem";
+
 export class Slider {
     Interval: number;
     Height: number;
@@ -5,5 +7,6 @@ export class Slider {
     Disabled: boolean;
     ShowPrevNext: boolean;
     ShowSlideIndicators: boolean;
-    CreatedTime: Date
+    CreatedTime: Date;
+    SliderItemList : SliderItem[] = [];
 }

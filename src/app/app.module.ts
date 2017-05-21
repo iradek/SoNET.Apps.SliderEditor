@@ -14,7 +14,7 @@ import { AppsConfig } from "sonet-appskit";
 import { IntegrationService } from "sonet-appskit";
 
 import { SliderApiClient } from "./services/sliderApiClient";
-import { EditSlider } from "./controls/editSlider";
+import { EditSlider } from "./edit-slider/editSlider";
 
 import { Config } from "../apps.config";
 import { AppComponent } from "./app.component";

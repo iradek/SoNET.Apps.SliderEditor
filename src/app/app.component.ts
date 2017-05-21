@@ -1,6 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { SliderApiClient } from "./services/sliderApiClient";
-import { EditSlider } from "./controls/editSlider";
+import { EditSlider } from "./edit-slider/editSlider";
+import { Slider } from "app/models/slider";
+import { SliderItem } from "app/models/sliderItem";
 
 
 @Component({
@@ -10,6 +12,9 @@ import { EditSlider } from "./controls/editSlider";
 export class AppComponent {
   name: string = "Slider Editor";
   objectFromApi: string;
+  get currentSlider(): Slider {
+    return this.editSliderControl.getSlider();
+  }
 
   @ViewChild("editSlider") editSliderControl: EditSlider
 
@@ -25,10 +30,14 @@ export class AppComponent {
   }
 
   sliderSaved() {
-    let slider = this.editSliderControl.getSlider();
-    if (slider) {
-      let savedSlider = this.apiClient.saveSliderAsync(slider);
-    }
+    if (!this.currentSlider)
+      return;
+    let savedSlider = this.apiClient.saveSliderAsync(this.currentSlider);
+  }
+
+  addNew() {
+    let newSliderItem: SliderItem = new SliderItem();
+    this.currentSlider.SliderItemList.push(newSliderItem);
   }
 
 }

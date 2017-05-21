@@ -25,6 +25,10 @@ export class EditSliderItemComponent implements OnInit {
     this.buildForm();
   }
 
+  getSliderItem(): SliderItem {
+    return this.editSliderItemForm.valid ? this.editSliderItemForm.value : null;
+  }
+
   buildForm(): void {
     this.editSliderItemForm = this.formBuilder.group({
       "TagTitle": [this.sliderItem.TagTitle, [Validators.required]],

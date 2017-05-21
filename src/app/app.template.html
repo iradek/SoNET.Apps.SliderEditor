@@ -1,17 +1,17 @@
 ﻿<p-accordion>
     <p-accordionTab header="General Slider Preferences" [selected]="true">
-      <sonet-editSlider #editSlider></sonet-editSlider>
+        <sonet-editSlider #editSlider></sonet-editSlider>
     </p-accordionTab>
-    <p-accordionTab header="Slide #1">
-        <sonet-edit-slider-item></sonet-edit-slider-item>
-    </p-accordionTab>
-    <p-accordionTab header="Slider #2">
+    <p-accordionTab header="Slide #{{i+1}}" *ngFor="let sliderItem of currentSlider?.SliderItemList; let i = index">
         <sonet-edit-slider-item></sonet-edit-slider-item>
     </p-accordionTab>
 </p-accordion>
 
+<p class="pull-right">
+    <a (click)="addNew()" class="btn btn-success" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add New Slide</a>
+</p>
 <p>
-    <input class="btn btn-danger" [disabled]="!editSlider.valid" type="button" (click)="sliderSaved()" value="Save Slider"/>
+    <input class="btn btn-danger" [disabled]="!editSlider.valid" type="button" (click)="sliderSaved()" value="Save Slider" />
 </p>
 <pre>
 {{objectFromApi|json }}
