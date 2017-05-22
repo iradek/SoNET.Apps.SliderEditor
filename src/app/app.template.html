@@ -3,12 +3,15 @@
         <sonet-editSlider #editSlider></sonet-editSlider>
     </p-accordionTab>
     <p-accordionTab header="Slide #{{i+1}}" *ngFor="let sliderItem of currentSlider?.SliderItemList; let i = index">
-        <sonet-edit-slider-item></sonet-edit-slider-item>
+        <div class="pull-right">
+            <a href="#" class="btn btn-danger" (click)="deleteSliderItem(i)"><i class="fa fa-minus" aria-hidden="true"></i> Delete This Slide</a>
+        </div>
+        <sonet-edit-slider-item [sliderItem]="sliderItem"></sonet-edit-slider-item>
     </p-accordionTab>
 </p-accordion>
 
 <p class="pull-right">
-    <a (click)="addNew()" class="btn btn-success" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add New Slide</a>
+    <a (click)="addNewSliderItem()" class="btn btn-success" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add New Slide</a>
 </p>
 <p>
     <input class="btn btn-danger" [disabled]="!editSlider.valid" type="button" (click)="sliderSaved()" value="Save Slider" />

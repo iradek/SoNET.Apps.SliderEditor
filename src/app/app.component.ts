@@ -12,6 +12,7 @@ import { SliderItem } from "app/models/sliderItem";
 export class AppComponent {
   name: string = "Slider Editor";
   objectFromApi: string;
+
   get currentSlider(): Slider {
     return this.editSliderControl.getSlider();
   }
@@ -35,7 +36,11 @@ export class AppComponent {
     let savedSlider = this.apiClient.saveSliderAsync(this.currentSlider);
   }
 
-  addNew() {
+  deleteSliderItem(index: number) {   
+    this.currentSlider.SliderItemList.splice(index,1);
+  }
+
+  addNewSliderItem() {
     let newSliderItem: SliderItem = new SliderItem();
     this.currentSlider.SliderItemList.push(newSliderItem);
   }

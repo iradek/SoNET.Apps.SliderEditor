@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SliderItem } from "app/models/sliderItem";
 
@@ -8,15 +8,19 @@ import { SliderItem } from "app/models/sliderItem";
   styleUrls: ['./edit-slider-item.component.css']
 })
 export class EditSliderItemComponent implements OnInit {
-
   private _sliderItem: SliderItem;
 
   editSliderItemForm: FormGroup
-
+  
   get sliderItem(): SliderItem {
     if (!this._sliderItem)
       this._sliderItem = new SliderItem();
     return this._sliderItem;
+  }
+
+  @Input()  
+  set sliderItem(value: SliderItem) {
+    this._sliderItem = value;
   }
 
   constructor(private formBuilder: FormBuilder) { }
@@ -26,7 +30,8 @@ export class EditSliderItemComponent implements OnInit {
   }
 
   getSliderItem(): SliderItem {
-    return this.editSliderItemForm.valid ? this.editSliderItemForm.value : null;
+    Object.assign(this.sliderItem, this.editSliderItemForm.value);
+    return this.sliderItem;
   }
 
   buildForm(): void {
