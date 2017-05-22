@@ -8,10 +8,10 @@ import { SliderItem } from "app/models/sliderItem";
   styleUrls: ['./edit-slider-item.component.css']
 })
 export class EditSliderItemComponent implements OnInit {
-  private _sliderItem: SliderItem;
-
+  
   editSliderItemForm: FormGroup
   
+  private _sliderItem: SliderItem;
   get sliderItem(): SliderItem {
     if (!this._sliderItem)
       this._sliderItem = new SliderItem();
@@ -21,6 +21,11 @@ export class EditSliderItemComponent implements OnInit {
   @Input()  
   set sliderItem(value: SliderItem) {
     this._sliderItem = value;
+    this.buildForm();
+  }
+
+  get valid() {
+    return this.editSliderItemForm && this.editSliderItemForm.valid;
   }
 
   constructor(private formBuilder: FormBuilder) { }

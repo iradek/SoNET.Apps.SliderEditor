@@ -5,8 +5,6 @@ import { ValidationService } from "sonet-appskit";
 
 @Component({
     selector: "sonet-editSlider",
-    inputs: [
-    ],
     templateUrl: "./editSlider.html"
 })
 export class EditSlider implements OnInit {

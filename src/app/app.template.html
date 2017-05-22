@@ -2,19 +2,19 @@
     <p-accordionTab header="General Slider Preferences" [selected]="true">
         <sonet-editSlider #editSlider></sonet-editSlider>
     </p-accordionTab>
-    <p-accordionTab header="Slide #{{i+1}}" *ngFor="let sliderItem of currentSlider?.SliderItemList; let i = index">
+    <p-accordionTab [class.invalid-slide-item]="!editSliderItem.valid" header="Slide #{{i+1}}" *ngFor="let sliderItem of sliderItemList; let i = index">
         <div class="pull-right">
-            <a href="#" class="btn btn-danger" (click)="deleteSliderItem(i)"><i class="fa fa-minus" aria-hidden="true"></i> Delete This Slide</a>
+            <a href="#" class="btn btn-danger" (click)="deleteSliderItem(i)"><i class="fa fa-minus-circle" aria-hidden="true"></i> Delete This Slide</a>
         </div>
-        <sonet-edit-slider-item [sliderItem]="sliderItem"></sonet-edit-slider-item>
+        <sonet-edit-slider-item #editSliderItem></sonet-edit-slider-item>
     </p-accordionTab>
 </p-accordion>
 
 <p class="pull-right">
-    <a (click)="addNewSliderItem()" class="btn btn-success" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add New Slide</a>
+    <a (click)="addNewSliderItem()" class="btn btn-success" href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Slide</a>
 </p>
 <p>
-    <input class="btn btn-danger" [disabled]="!editSlider.valid" type="button" (click)="sliderSaved()" value="Save Slider" />
+    <input class="btn btn-danger" [disabled]="!canSave" type="button" (click)="saveSlider()" value="Save Slider" />
 </p>
 <pre>
 {{objectFromApi|json }}
