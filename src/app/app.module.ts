@@ -19,10 +19,11 @@ import { EditSlider } from "./edit-slider/editSlider";
 import { Config } from "../apps.config";
 import { AppComponent } from "./app.component";
 import { EditSliderItemComponent } from './edit-slider-item/edit-slider-item.component';
+import { ImageCropperComponent } from "ng2-img-cropper";
 
 @NgModule({
     imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, AccordionModule],
-    declarations: [AppComponent, EditSlider, EditSliderItemComponent],
+    declarations: [AppComponent, EditSlider, EditSliderItemComponent, ImageCropperComponent],
     providers: [
         SliderApiClient,
         OAuthService,

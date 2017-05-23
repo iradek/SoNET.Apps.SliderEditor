@@ -1,11 +1,20 @@
 <form [formGroup]="editSliderItemForm" class="form-horizontal">
   <fieldset>
 
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="txtTagTitle">Image:</label>
+      <div class="col-md-8">
+        <img-cropper [image]="imagedata" [settings]="cropperSettings"></img-cropper><br>
+        <img *ngIf="imagedata?.image" [src]="imagedata.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+      </div>
+    </div>
+
     <!-- Text input-->
     <div class="form-group">
       <label class="col-md-4 control-label" for="txtTagTitle">Slide Title:</label>
       <div class="col-md-5">
-        <input id="txtTagTitle" formControlName="TagTitle" type="text" placeholder="enter slide title" class="form-control input-md" required>
+        <input id="txtTagTitle" formControlName="TagTitle" type="text" placeholder="enter slide title" class="form-control input-md"
+          required>
         <span class="help-block">Prominent slide title</span>
       </div>
       <sonet-validation-message [control]="editSliderItemForm.controls['TagTitle']"></sonet-validation-message>
