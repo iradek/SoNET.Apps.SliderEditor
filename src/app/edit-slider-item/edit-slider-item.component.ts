@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SliderItem } from "app/models/sliderItem";
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
+import { Slider } from "app/models/slider";
 
 @Component({
   selector: 'sonet-edit-slider-item',
@@ -9,7 +10,7 @@ import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
   styleUrls: ['./edit-slider-item.component.css']
 })
 export class EditSliderItemComponent implements OnInit {
-  
+
   imagedata: any = {};
 
   private _cropperSettings: CropperSettings;
@@ -17,11 +18,11 @@ export class EditSliderItemComponent implements OnInit {
     if (this._cropperSettings == null) {
       this._cropperSettings = new CropperSettings();
       this._cropperSettings.width = 500;
-      this._cropperSettings.height = 300;
+      this._cropperSettings.height = this.slider ? this.slider.Height : 300;
       this._cropperSettings.croppedWidth = 500;
-      this._cropperSettings.croppedHeight = 300;
+      this._cropperSettings.croppedHeight = this.slider ? this.slider.Height : 300;
       this._cropperSettings.canvasWidth = 500;
-      this._cropperSettings.canvasHeight = 300;
+      this._cropperSettings.canvasHeight = this.slider ? this.slider.Height : 300;
     }
     return this._cropperSettings;
   }
@@ -44,6 +45,9 @@ export class EditSliderItemComponent implements OnInit {
   get valid() {
     return this.editSliderItemForm && this.editSliderItemForm.valid;
   }
+
+  @Input()
+  slider: Slider;
 
   constructor(private formBuilder: FormBuilder) { }
 

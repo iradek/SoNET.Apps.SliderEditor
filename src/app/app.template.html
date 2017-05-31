@@ -1,12 +1,12 @@
 ﻿<p-accordion>
     <p-accordionTab header="General Slider Preferences" [selected]="true">
-        <sonet-editSlider #editSlider></sonet-editSlider>
+        <sonet-editSlider [sliderItemList]="sliderItemList" #editSlider></sonet-editSlider>
     </p-accordionTab>
     <p-accordionTab [class.invalid-slide-item]="!editSliderItem.valid" header="Slide #{{i+1}}" *ngFor="let sliderItem of sliderItemList; let i = index">
         <div class="pull-right">
             <a href="#" class="btn btn-danger" (click)="deleteSliderItem(i)"><i class="fa fa-minus-circle" aria-hidden="true"></i> Delete This Slide</a>
         </div>
-        <sonet-edit-slider-item #editSliderItem></sonet-edit-slider-item>
+        <sonet-edit-slider-item #editSliderItem [slider]="currentSlider"></sonet-edit-slider-item>
     </p-accordionTab>
 </p-accordion>
 

@@ -2,22 +2,26 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Slider } from "../models/slider";
 import { ValidationService } from "sonet-appskit";
+import { SliderItem } from "app/models/sliderItem";
 
 @Component({
     selector: "sonet-editSlider",
     templateUrl: "./editSlider.html"
 })
 export class EditSlider implements OnInit {
-    
-    private _slider : Slider;
 
-    get valid(): boolean  {
-        return this.editSliderForm && this.editSliderForm.valid;
-    }
+    private _slider: Slider;
+
+    @Input()
+    sliderItemList: SliderItem[] = [];    
 
     get slider(): Slider {
-        if (!this._slider)
+        if (!this._slider) {
             this._slider = new Slider();
+            //some default values
+            this._slider.Height = 300;
+            this._slider.Interval = 3;
+        }
         return this._slider;
     }
     @Input()
@@ -26,10 +30,18 @@ export class EditSlider implements OnInit {
         this.buildForm();
     }
 
-    getSlider() : Slider {
+    getSlider(): Slider {
         Object.assign(this.slider, this.editSliderForm.value);
         return this.slider;
     }
+
+    get valid(): boolean {
+        return this.editSliderForm && this.editSliderForm.valid;
+    }
+
+    get canChangeHeight() : boolean {
+        return !this.sliderItemList || !this.sliderItemList.length || this.sliderItemList.length === 0;
+    }    
 
     editSliderForm: FormGroup;
 
@@ -42,6 +54,9 @@ export class EditSlider implements OnInit {
         this.buildForm();
     }
 
+    ngAfterViewInit() {
+    }
+
     buildForm(): void {
         this.editSliderForm = this.formBuilder.group({
             "Disabled": [this.slider.Disabled || false, [Validators.required]],
@@ -50,6 +65,5 @@ export class EditSlider implements OnInit {
             "ShowPrevNext": [this.slider.ShowPrevNext || false, [Validators.required]],
             "ShowSlideIndicators": [this.slider.ShowSlideIndicators || false, [Validators.required]]
         });
-
     }
 }

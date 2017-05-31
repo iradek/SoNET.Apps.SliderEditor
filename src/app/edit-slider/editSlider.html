@@ -4,7 +4,7 @@
         <!-- Form Name -->
         <legend>Edit Slider</legend>
 
-        <!-- Multiple Radios (inline) -->
+        <!-- State -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="Enabled">State:</label>
             <div class="col-md-4">
@@ -15,18 +15,25 @@
             </div>
         </div>
 
-        <!-- Appended Input-->
+        <!-- Height-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="Height">Height:</label>
             <div class="col-md-3">
-                <div class="input-group">
+                <div class="input-group" *ngIf="canChangeHeight">
                     <input id="txtHeight" class="form-control" placeholder="" formControlName="Height" type="text" required>
                     <span class="input-group-addon">px</span>
+                </div>
+                <div *ngIf="!canChangeHeight">
+                    <div class="input-group">
+                        <span class="form-control">{{editSliderForm.controls['Height'].value}}</span>
+                        <span class="input-group-addon">px</span>
+                    </div>
+                    <div class="badge">To change height - please remove all existing slides</div>
                 </div>
             </div>
             <sonet-validation-message [control]="editSliderForm.controls['Height']"></sonet-validation-message>
         </div>
-        <!-- Appended Input-->
+        <!-- Interval-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="Interval">Interval:</label>
             <div class="col-md-3">
@@ -38,7 +45,7 @@
             </div>
             <sonet-validation-message [control]="editSliderForm.controls['Interval']"></sonet-validation-message>
         </div>
-        <!-- Multiple Radios -->
+        <!-- Previous/Next -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="ShowPrevNext">Previous/Next:</label>
             <div class="col-md-4">
@@ -53,7 +60,7 @@
             </div>
         </div>
 
-        <!-- Multiple Radios -->
+        <!-- Slide Indicators -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="ShowSlideIndicators">Slide Indicators:</label>
             <div class="col-md-4">
