@@ -12,17 +12,19 @@ import { Slider } from "app/models/slider";
 export class EditSliderItemComponent implements OnInit {
 
   imagedata: any = {};
+  minWidth: number = 800; //adjust based min width of all templates
+  defaultHeight: number = 300;
 
   private _cropperSettings: CropperSettings;
   get cropperSettings() {
     if (this._cropperSettings == null) {
       this._cropperSettings = new CropperSettings();
-      this._cropperSettings.width = 500;
-      this._cropperSettings.height = this.slider ? this.slider.Height : 300;
-      this._cropperSettings.croppedWidth = 500;
-      this._cropperSettings.croppedHeight = this.slider ? this.slider.Height : 300;
-      this._cropperSettings.canvasWidth = 500;
-      this._cropperSettings.canvasHeight = this.slider ? this.slider.Height : 300;
+      this._cropperSettings.width = this.finalWidth;
+      this._cropperSettings.height = this.slider ? this.slider.Height : this.defaultHeight;
+      this._cropperSettings.croppedWidth = this.finalWidth;
+      this._cropperSettings.croppedHeight = this.slider ? this.slider.Height : this.defaultHeight;
+      this._cropperSettings.canvasWidth = this.finalWidth;
+      this._cropperSettings.canvasHeight = this.slider ? this.slider.Height : this.defaultHeight;
     }
     return this._cropperSettings;
   }
@@ -43,11 +45,18 @@ export class EditSliderItemComponent implements OnInit {
   }
 
   get valid() {
-    return this.editSliderItemForm && this.editSliderItemForm.valid;
+    return this.imagedata && this.imagedata.image;
   }
 
   @Input()
   slider: Slider;
+
+  @Input()
+  width: number;
+
+  get finalWidth() {
+    return this.width > this.minWidth ? this.width : this.minWidth;
+  }
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -62,7 +71,7 @@ export class EditSliderItemComponent implements OnInit {
 
   buildForm(): void {
     this.editSliderItemForm = this.formBuilder.group({
-      "TagTitle": [this.sliderItem.TagTitle, [Validators.required]],
+      "TagTitle": [this.sliderItem.TagTitle,[]],
       "TagMessage": [this.sliderItem.TagMessage, []],
       "ButtonText": [this.sliderItem.ButtonText, []],
       "ButtonUrl": [this.sliderItem.ButtonText, []]

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewChildren, QueryList } from "@angular/core";
+import { Component, ViewChild, ViewChildren, QueryList, ElementRef } from "@angular/core";
 import { SliderApiClient } from "./services/sliderApiClient";
 import { EditSlider } from "./edit-slider/editSlider";
 import { Slider } from "app/models/slider";
@@ -13,6 +13,7 @@ import { EditSliderItemComponent } from "app/edit-slider-item/edit-slider-item.c
 export class AppComponent {
   name: string = "Slider Editor";
   objectFromApi: string;
+  width: number;
 
   sliderItemList: SliderItem[] = [];
 
@@ -25,21 +26,23 @@ export class AppComponent {
   }
 
   @ViewChild("editSlider") editSliderControl: EditSlider;
+  @ViewChild("slideEditor") slideEditor: ElementRef;
   @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
 
-  constructor(private apiClient: SliderApiClient) {
+  constructor(private apiClient: SliderApiClient) {    
   }
 
   async ngOnInit() {
     let currentSite = await this.apiClient.getSiteAsync();
     this.objectFromApi = currentSite;
+    this.width = this.slideEditor.nativeElement.offsetWidth;
     if (currentSite && currentSite.SliderID) {
       let slider = await this.apiClient.getSliderAsync(currentSite.SliderID);
-    }
+    }    
   }
 
   ngAfterViewInit() {
-
+    
   }
 
   saveSlider() {
