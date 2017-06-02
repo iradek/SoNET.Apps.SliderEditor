@@ -1,5 +1,6 @@
 export class SliderItem {
     SliderItemID: string;
+    SliderID: string;
     SliderItem: string;
     ImagePath: string;
     TagTitle: string;

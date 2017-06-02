@@ -20,6 +20,7 @@ import { Config } from "../apps.config";
 import { AppComponent } from "./app.component";
 import { EditSliderItemComponent } from './edit-slider-item/edit-slider-item.component';
 import { ImageCropperComponent } from "ng2-img-cropper";
+import { UtilsService } from "app/services/utils.service";
 
 @NgModule({
     imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, AccordionModule],
@@ -29,6 +30,7 @@ import { ImageCropperComponent } from "ng2-img-cropper";
         OAuthService,
         UrlService,
         Config,
+        UtilsService,
         IntegrationService,
         {
             provide: AppsConfig,

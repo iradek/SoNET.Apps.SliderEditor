@@ -29,7 +29,7 @@ export class AppComponent {
   @ViewChild("slideEditor") slideEditor: ElementRef;
   @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
 
-  constructor(private apiClient: SliderApiClient) {    
+  constructor(private apiClient: SliderApiClient) {
   }
 
   async ngOnInit() {
@@ -38,20 +38,25 @@ export class AppComponent {
     this.width = this.slideEditor.nativeElement.offsetWidth;
     if (currentSite && currentSite.SliderID) {
       let slider = await this.apiClient.getSliderAsync(currentSite.SliderID);
-    }    
+    }
   }
 
   ngAfterViewInit() {
-    
+
   }
 
-  saveSlider() {
+  async saveSlider() {
     if (!this.currentSlider)
       return;
-    let savedSlider = this.apiClient.saveSliderAsync(this.currentSlider);
+    let savedSlider = await this.apiClient.saveSliderAsync(this.currentSlider);
     for (let editSliderControl of this.editSliderItemControls.toArray()) {
-      let sliderItem = editSliderControl.getSliderItem();
-      console.log(sliderItem);
+      let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;
+      if (validSliderItemDataToSave) {
+        let sliderItem = editSliderControl.getSliderItem();
+        sliderItem.SliderID = savedSlider.SliderID;
+        var savedSliderItem = await this.apiClient.saveSliderItemAsync(sliderItem);
+        await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
+      }
     }
   }
 
