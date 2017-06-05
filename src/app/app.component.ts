@@ -7,66 +7,78 @@ import { EditSliderItemComponent } from "app/edit-slider-item/edit-slider-item.c
 
 
 @Component({
-  selector: "sonet-sliderEditor",
-  templateUrl: "./app.template.html"
+    selector: "sonet-sliderEditor",
+    templateUrl: "./app.template.html"
 })
 export class AppComponent {
-  name: string = "Slider Editor";
-  objectFromApi: string;
-  width: number;
 
-  sliderItemList: SliderItem[] = [];
+    @ViewChild("editSlider") editSliderControl: EditSlider;
+    @ViewChild("slideEditor") slideEditor: ElementRef;
+    @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
 
-  get currentSlider(): Slider {
-    return this.editSliderControl.getSlider();
-  }
+    name: string = "Slider Editor";
+    objectFromApi: string;
+    width: number;
 
-  get canSave(): boolean {
-    return this.editSliderControl && this.editSliderControl.valid && this.sliderItemList.length > 0;
-  }
+    //sliderItemList: SliderItem[] = [];
 
-  @ViewChild("editSlider") editSliderControl: EditSlider;
-  @ViewChild("slideEditor") slideEditor: ElementRef;
-  @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
-
-  constructor(private apiClient: SliderApiClient) {
-  }
-
-  async ngOnInit() {
-    let currentSite = await this.apiClient.getSiteAsync();
-    this.objectFromApi = currentSite;
-    this.width = this.slideEditor.nativeElement.offsetWidth;
-    if (currentSite && currentSite.SliderID) {
-      let slider = await this.apiClient.getSliderAsync(currentSite.SliderID);
+    get currentSlider(): Slider {
+        return this.editSliderControl.getSliderObject();
     }
-  }
-
-  ngAfterViewInit() {
-
-  }
-
-  async saveSlider() {
-    if (!this.currentSlider)
-      return;
-    let savedSlider = await this.apiClient.saveSliderAsync(this.currentSlider);
-    for (let editSliderControl of this.editSliderItemControls.toArray()) {
-      let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;
-      if (validSliderItemDataToSave) {
-        let sliderItem = editSliderControl.getSliderItem();
-        sliderItem.SliderID = savedSlider.SliderID;
-        var savedSliderItem = await this.apiClient.saveSliderItemAsync(sliderItem);
-        await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
-      }
+    set currentSlider(value: Slider) {
+        this.editSliderControl.slider = value;
     }
-  }
 
-  deleteSliderItem(index: number) {
-    this.sliderItemList.splice(index, 1);
-  }
+    get canSave(): boolean {
+        return this.editSliderControl && this.editSliderControl.valid && this.currentSlider && this.currentSlider.SliderItemList && this.currentSlider.SliderItemList.length > 0;
+    }
 
-  addNewSliderItem() {
-    let newSliderItem: SliderItem = new SliderItem();
-    this.sliderItemList.push(newSliderItem);
-  }
+    constructor(private apiClient: SliderApiClient) {
+    }
+
+    async ngOnInit() {
+        let currentSite = await this.apiClient.getSiteAsync();
+        this.objectFromApi = currentSite;
+
+        this.width = this.slideEditor.nativeElement.offsetWidth;
+        if (currentSite && currentSite.SliderID) {
+            this.currentSlider = await this.apiClient.getSliderAsync(currentSite.SliderID);
+        }
+    }
+
+    ngAfterViewInit() {
+
+    }
+
+    async saveSlider() {
+        if (!this.currentSlider)
+            return;
+        //save Slider
+        let savedSlider = await this.apiClient.updateOrSaveSliderAsync(this.currentSlider);
+        //save Slider Items
+        for (let editSliderControl of this.editSliderItemControls.toArray()) {
+            let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;
+            if (validSliderItemDataToSave) {
+                let sliderItem = editSliderControl.getSliderItem();
+                sliderItem.SliderID = savedSlider.SliderID;
+                var savedSliderItem = await this.apiClient.saveSliderItemAsync(sliderItem);
+                await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
+            }
+        }
+        //associate with a Site
+        let currentSite = await this.apiClient.getSiteAsync();
+        if (!currentSite)
+            throw new Error("Current Site is null which is not supported while saving a Slider.");
+        await this.apiClient.saveSliderForSiteAsync(currentSite.SiteName, savedSlider.SliderID);
+    }
+
+    deleteSliderItem(index: number) {
+        this.currentSlider.SliderItemList.splice(index, 1);
+    }
+
+    addNewSliderItem() {
+        let newSliderItem: SliderItem = new SliderItem();
+        this.currentSlider.SliderItemList.push(newSliderItem);
+    }
 
 }

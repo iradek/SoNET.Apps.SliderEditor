@@ -1,6 +1,6 @@
 <form [formGroup]="editSliderItemForm" class="form-horizontal">
   <fieldset>
-    <div #imgContainer>
+    <div #imgContainer class="form-group">
       <label class="control-label">Image:</label>
       <img-cropper [image]="imagedata" [settings]="cropperSettings"></img-cropper><br>
       <img *ngIf="imagedata?.image" [src]="imagedata.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">

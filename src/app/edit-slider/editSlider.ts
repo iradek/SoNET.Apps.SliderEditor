@@ -13,7 +13,7 @@ export class EditSlider implements OnInit {
     private _slider: Slider;
 
     @Input()
-    sliderItemList: SliderItem[] = [];    
+    sliderItemList: SliderItem[] = [];
 
     get slider(): Slider {
         if (!this._slider) {
@@ -30,8 +30,9 @@ export class EditSlider implements OnInit {
         this.buildForm();
     }
 
-    getSlider(): Slider {
-        Object.assign(this.slider, this.editSliderForm.value);
+    getSliderObject(): Slider {
+        if (this.editSliderForm)
+            Object.assign(this.slider, this.editSliderForm.value);
         return this.slider;
     }
 
@@ -39,9 +40,9 @@ export class EditSlider implements OnInit {
         return this.editSliderForm && this.editSliderForm.valid;
     }
 
-    get canChangeHeight() : boolean {
+    get canChangeHeight(): boolean {
         return !this.sliderItemList || !this.sliderItemList.length || this.sliderItemList.length === 0;
-    }    
+    }
 
     editSliderForm: FormGroup;
 

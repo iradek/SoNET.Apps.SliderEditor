@@ -8,4 +8,5 @@ export class Slider {
     ShowPrevNext: boolean;
     ShowSlideIndicators: boolean;
     CreatedTime: Date;
+    SliderItemList : SliderItem[];
 }
