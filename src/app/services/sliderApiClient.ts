@@ -22,8 +22,9 @@ export class SliderApiClient extends ApiClient {
     async saveSliderAsync(slider: Slider): Promise<Slider> {
         if (!slider)
             throw new Error("Invalid Slider to save.");
-        delete slider.SliderItemList; //SliderItems are saved separately
-        return await this.httpProxy.postAsync<Slider>("/odata/Sliders", slider);
+        var clonedSlider = Object.assign({}, slider);
+        delete clonedSlider.SliderItemList;
+        return await this.httpProxy.postAsync<Slider>("/odata/Sliders", clonedSlider);
     }
 
     async updateSliderAsync(slider: Slider): Promise<Slider> {
@@ -31,18 +32,19 @@ export class SliderApiClient extends ApiClient {
             throw new Error("Invalid Slider to update");
         if (!slider.SliderID)
             throw new Error("Slider does not have SliderID therefore does not qualify to be updated.");
-        delete slider.SliderItemList;
-        return await this.httpProxy.putAsync<Slider>(`/odata/Sliders(${slider.SliderID})`, slider);
+        var clonedSlider = Object.assign({}, slider);
+        delete clonedSlider.SliderItemList;
+        return await this.httpProxy.putAsync<Slider>(`/odata/Sliders(${slider.SliderID})`, clonedSlider);
     }
 
-    async updateOrSaveSliderAsync(slider: Slider): Promise<Slider> {
+    async saveOrUpdateSliderAsync(slider: Slider): Promise<Slider> {
         if (!slider)
             throw new Error("Invalid Slider to save or update");
         let objectSaved = slider.SliderID;
         if (objectSaved)
-            return this.updateSliderAsync(slider);
+            return await this.updateSliderAsync(slider);
         else
-            return this.saveSliderAsync(slider);
+            return await this.saveSliderAsync(slider);
     }
 
     /**
@@ -64,6 +66,24 @@ export class SliderApiClient extends ApiClient {
         if (!sliderItem)
             throw new Error("Invalid SliderItem to save.");
         return await this.httpProxy.postAsync<SliderItem>("/odata/SliderItems", sliderItem);
+    }
+
+    async updateSliderItemAsync(sliderItem: SliderItem): Promise<SliderItem> {
+        if (!sliderItem)
+            throw new Error("Invalid SliderItem to update");
+        if (!sliderItem.SliderItemID)
+            throw new Error("SliderItem does not have a valid SliderItemID therefore does not qualify to be updated");
+        return await this.httpProxy.putAsync<SliderItem>(`/odata/SliderItems(${sliderItem.SliderItemID})`, sliderItem);
+    }
+
+    async saveOrUpdateSliderItemAsync(sliderItem: SliderItem): Promise<SliderItem> {
+        if (!sliderItem)
+            throw new Error("Invalid SliderItem to save or update.");
+        let objectSaved = sliderItem.SliderItemID;
+        if (objectSaved)
+            return await this.updateSliderItemAsync(sliderItem);
+        else
+            return await this.saveSliderItemAsync(sliderItem);
     }
 
     async uploadSliderItemImageAsync(sliderItemID: string, imageDataUri: string): Promise<SliderItem> {

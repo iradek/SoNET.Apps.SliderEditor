@@ -41,9 +41,8 @@ export class AppComponent {
         this.objectFromApi = currentSite;
 
         this.width = this.slideEditor.nativeElement.offsetWidth;
-        if (currentSite && currentSite.SliderID) {
-            this.currentSlider = await this.apiClient.getSliderAsync(currentSite.SliderID);
-        }
+        if (currentSite && currentSite.SliderID)
+            this.currentSlider = await this.apiClient.getSliderAsync(currentSite.SliderID); //from db            
     }
 
     ngAfterViewInit() {
@@ -54,14 +53,16 @@ export class AppComponent {
         if (!this.currentSlider)
             return;
         //save Slider
-        let savedSlider = await this.apiClient.updateOrSaveSliderAsync(this.currentSlider);
+        console.log(this.editSliderItemControls.toArray());
+        let savedSlider = await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);        
+        console.log(this.editSliderItemControls.toArray());
         //save Slider Items
         for (let editSliderControl of this.editSliderItemControls.toArray()) {
-            let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;
+            let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;            
             if (validSliderItemDataToSave) {
-                let sliderItem = editSliderControl.getSliderItem();
-                sliderItem.SliderID = savedSlider.SliderID;
-                var savedSliderItem = await this.apiClient.saveSliderItemAsync(sliderItem);
+                let sliderItem = editSliderControl.getSliderItemObject();
+                sliderItem.SliderID = savedSlider.SliderID;                
+                var savedSliderItem = await this.apiClient.saveOrUpdateSliderItemAsync(sliderItem);
                 await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
             }
         }

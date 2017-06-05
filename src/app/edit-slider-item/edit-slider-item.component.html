@@ -3,7 +3,7 @@
     <div #imgContainer class="form-group">
       <label class="control-label">Image:</label>
       <img-cropper [image]="imagedata" [settings]="cropperSettings"></img-cropper><br>
-      <img *ngIf="imagedata?.image" [src]="imagedata.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+      <img *ngIf="imgSource" [src]="imgSource" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
     </div>
 
     <!-- Text input-->
