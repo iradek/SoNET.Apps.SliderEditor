@@ -51,16 +51,16 @@ export class EditSliderItemComponent implements OnInit {
         return this._cropperSettings;
     }
 
-    get valid() {
-        return this.imagedata && this.imagedata.image;
+    get valid() : boolean {
+        return this.imgSource != null;
     }
 
-    get finalWidth() {
+    get finalWidth() : number {
         return this.width > this.minWidth ? this.width : this.minWidth;
     }
 
     private _imgSource: string;
-    get imgSource() {
+    get imgSource() : string {
         return this._imgSource ? this._imgSource : this.imagedata!.image;
     }
     set imgSource(value: string) {
