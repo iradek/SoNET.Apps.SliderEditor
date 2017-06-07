@@ -94,4 +94,11 @@ export class SliderApiClient extends ApiClient {
         formData.append("SiteName", this.appsConfig.siteName)
         return await this.httpProxy.postAsync<SliderItem>(url, formData);
     }
+
+    async deleteSliderItemAsync(sliderItemID: string): Promise<SliderItem> {
+        if (!sliderItemID)
+            throw new Error("Invalid SliderItemID while deleting SliderItem");
+        var url = `/odata/SliderItems(${sliderItemID})`;
+        return await this.httpProxy.deleteAsync<SliderItem>(url);        
+    }
 }

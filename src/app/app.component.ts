@@ -53,9 +53,7 @@ export class AppComponent {
         if (!this.currentSlider)
             return;
         //save Slider
-        console.log(this.editSliderItemControls.toArray());
         let savedSlider = await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);        
-        console.log(this.editSliderItemControls.toArray());
         //save Slider Items
         for (let editSliderControl of this.editSliderItemControls.toArray()) {
             let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;            
@@ -73,8 +71,11 @@ export class AppComponent {
         await this.apiClient.saveSliderForSiteAsync(currentSite.SiteName, savedSlider.SliderID);
     }
 
-    deleteSliderItem(index: number) {
-        this.currentSlider.SliderItemList.splice(index, 1);
+    async deleteSliderItem(index: number) {
+        var sliderItemID = this.currentSlider.SliderItemList[index]!.SliderItemID;
+        this.currentSlider.SliderItemList.splice(index, 1);        
+        if(sliderItemID)
+            await this.apiClient.deleteSliderItemAsync(sliderItemID);
     }
 
     addNewSliderItem() {

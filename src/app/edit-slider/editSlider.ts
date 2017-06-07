@@ -28,6 +28,7 @@ export class EditSlider implements OnInit {
     set slider(value: Slider) {
         this._slider = value;
         this.buildForm();
+        this.fillControlFromInstance(value);
     }
 
     getSliderObject(): Slider {
@@ -66,5 +67,10 @@ export class EditSlider implements OnInit {
             "ShowPrevNext": [this.slider.ShowPrevNext || false, [Validators.required]],
             "ShowSlideIndicators": [this.slider.ShowSlideIndicators || false, [Validators.required]]
         });
+    }
+
+    fillControlFromInstance(instance: Slider) {
+        if (!instance)
+            return;                    
     }
 }

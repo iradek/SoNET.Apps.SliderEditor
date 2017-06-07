@@ -2,7 +2,7 @@
   <fieldset>
     <div #imgContainer class="form-group">
       <label class="control-label">Image:</label>
-      <img-cropper [image]="imagedata" [settings]="cropperSettings"></img-cropper><br>
+      <img-cropper [image]="imagedata" [settings]="cropperSettings" (onCrop)="imgCropped($event)"></img-cropper><br>
       <img *ngIf="imgSource" [src]="imgSource" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
     </div>
 
@@ -37,7 +37,7 @@
     <div class="form-group">
       <label class="col-md-4 control-label" for="txtButtonUrl">Button Url:</label>
       <div class="col-md-5">
-        <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind button" class="form-control input-md">
+        <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind the button" class="form-control input-md">
         <span class="help-block">Users are redirected to above Url when button is clicked</span>
       </div>
     </div>
