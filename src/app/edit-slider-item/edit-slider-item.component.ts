@@ -51,16 +51,16 @@ export class EditSliderItemComponent implements OnInit {
         return this._cropperSettings;
     }
 
-    get valid() : boolean {
+    get valid(): boolean {
         return this.imgSource != null;
     }
 
-    get finalWidth() : number {
+    get finalWidth(): number {
         return this.width > this.minWidth ? this.width : this.minWidth;
     }
 
     private _imgSource: string;
-    get imgSource() : string {
+    get imgSource(): string {
         return this._imgSource ? this._imgSource : this.imagedata!.image;
     }
     set imgSource(value: string) {
@@ -78,6 +78,12 @@ export class EditSliderItemComponent implements OnInit {
         Object.assign(this.sliderItem, this.editSliderItemForm.value);
         return this.sliderItem;
     }
+
+    // setSliderItemObject(sliderItem: SliderItem, order: number) {
+    //     this.sliderItem = sliderItem;
+    //     if (sliderItem)
+    //         this.sliderItem.Order = order;
+    // }
 
     buildForm(): void {
         this.editSliderItemForm = this.formBuilder.group({
