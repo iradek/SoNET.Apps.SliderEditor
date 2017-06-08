@@ -67,7 +67,6 @@ export class EditSliderItemComponent implements OnInit {
         this._imgSource = value;
     }
 
-
     constructor(private formBuilder: FormBuilder, private urlService: UrlService) { }
 
     ngOnInit() {

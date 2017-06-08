@@ -15,6 +15,7 @@ export class AppComponent {
     @ViewChild("editSlider") editSliderControl: EditSlider;
     @ViewChild("slideEditor") slideEditor: ElementRef;
     @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
+    @ViewChildren('accordionHeader') accordionHeaders: QueryList<ElementRef>;
 
     name: string = "Slider Editor";
     objectFromApi: string;
@@ -53,16 +54,20 @@ export class AppComponent {
         if (!this.currentSlider)
             return;
         //save Slider
-        let savedSlider = await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);        
+        let savedSlider = await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);
         //save Slider Items
+        let index: number = 0;
         for (let editSliderControl of this.editSliderItemControls.toArray()) {
-            let validSliderItemDataToSave = editSliderControl.imagedata && editSliderControl.imagedata.image;            
-            if (validSliderItemDataToSave) {
-                let sliderItem = editSliderControl.getSliderItemObject();
-                sliderItem.SliderID = savedSlider.SliderID;                
-                var savedSliderItem = await this.apiClient.saveOrUpdateSliderItemAsync(sliderItem);
+            if (!editSliderControl.valid)
+                continue;
+            let sliderItem = editSliderControl.getSliderItemObject();
+            sliderItem.SliderID = savedSlider.SliderID;
+            sliderItem.Order = index;
+            var savedSliderItem = await this.apiClient.saveOrUpdateSliderItemAsync(sliderItem);
+            let validSliderItemImageToUpload = editSliderControl.imagedata && editSliderControl.imagedata.image;
+            if (validSliderItemImageToUpload)
                 await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
-            }
+            index++;
         }
         //associate with a Site
         let currentSite = await this.apiClient.getSiteAsync();
@@ -73,14 +78,21 @@ export class AppComponent {
 
     async deleteSliderItem(index: number) {
         var sliderItemID = this.currentSlider.SliderItemList[index]!.SliderItemID;
-        this.currentSlider.SliderItemList.splice(index, 1);        
-        if(sliderItemID)
+        this.currentSlider.SliderItemList.splice(index, 1);
+        if (sliderItemID)
             await this.apiClient.deleteSliderItemAsync(sliderItemID);
     }
 
     addNewSliderItem() {
         let newSliderItem: SliderItem = new SliderItem();
         this.currentSlider.SliderItemList.push(newSliderItem);
+        setTimeout(()=>this.accordionHeaders!.last!.nativeElement!.click(), 100);//wait for rendering tick
+    }
+
+    trackSliderItem(index, sliderItem: SliderItem) {
+        if (!sliderItem)
+            return;
+        return sliderItem.SliderItemID;
     }
 
 }
