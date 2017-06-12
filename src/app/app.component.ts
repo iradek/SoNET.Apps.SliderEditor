@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewChildren, QueryList, ElementRef } from "@angular/core";
+import { Component, ViewChild, ViewChildren, QueryList, ElementRef, OnChanges } from "@angular/core";
 import { SliderApiClient } from "./services/sliderApiClient";
 import { EditSlider } from "./edit-slider/editSlider";
 import { Slider } from "app/models/slider";
@@ -15,13 +15,11 @@ export class AppComponent {
     @ViewChild("editSlider") editSliderControl: EditSlider;
     @ViewChild("slideEditor") slideEditor: ElementRef;
     @ViewChildren(EditSliderItemComponent) editSliderItemControls: QueryList<EditSliderItemComponent>;
-    @ViewChildren('accordionHeader') accordionHeaders: QueryList<ElementRef>;
+    @ViewChildren("accordionHeader") accordionHeaders: QueryList<ElementRef>;
 
     name: string = "Slider Editor";
     objectFromApi: string;
     width: number;
-
-    //sliderItemList: SliderItem[] = [];
 
     get currentSlider(): Slider {
         return this.editSliderControl.getSliderObject();
@@ -31,7 +29,7 @@ export class AppComponent {
     }
 
     get canSave(): boolean {
-        return this.editSliderControl && this.editSliderControl.valid && this.currentSlider && this.currentSlider.SliderItemList && this.currentSlider.SliderItemList.length > 0;
+        return this.editSliderControl!.valid;
     }
 
     constructor(private apiClient: SliderApiClient) {
@@ -47,7 +45,6 @@ export class AppComponent {
     }
 
     ngAfterViewInit() {
-
     }
 
     async saveSlider() {
@@ -86,7 +83,7 @@ export class AppComponent {
     addNewSliderItem() {
         let newSliderItem: SliderItem = new SliderItem();
         this.currentSlider.SliderItemList.push(newSliderItem);
-        setTimeout(()=>this.accordionHeaders!.last!.nativeElement!.click(), 100);//wait for rendering tick
+        setTimeout(() => this.accordionHeaders!.last!.nativeElement!.click(), 100);//wait for rendering tick
     }
 
     trackSliderItem(index, sliderItem: SliderItem) {

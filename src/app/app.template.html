@@ -1,4 +1,6 @@
 ﻿<div #slideEditor>
+
+    <sonet-busy-indicator></sonet-busy-indicator>
     <p-accordion>
         <p-accordionTab header="General Slider Preferences" [selected]="true">
             <sonet-editSlider [sliderItemList]="currentSlider?.SliderItemList" #editSlider></sonet-editSlider>
@@ -23,4 +25,4 @@
     <pre>
 {{objectFromApi|json }}
 </pre>
-</div>
+    </div>

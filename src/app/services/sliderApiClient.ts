@@ -99,6 +99,6 @@ export class SliderApiClient extends ApiClient {
         if (!sliderItemID)
             throw new Error("Invalid SliderItemID while deleting SliderItem");
         var url = `/odata/SliderItems(${sliderItemID})`;
-        return await this.httpProxy.deleteAsync<SliderItem>(url);        
+        return await this.httpProxy.deleteAsync<SliderItem>(url);
     }
 }

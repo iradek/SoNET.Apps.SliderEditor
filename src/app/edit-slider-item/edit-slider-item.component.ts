@@ -53,7 +53,7 @@ export class EditSliderItemComponent implements OnInit {
 
     get valid(): boolean {
         return this.imgSource != null;
-    }
+    }   
 
     get finalWidth(): number {
         return this.width > this.minWidth ? this.width : this.minWidth;
