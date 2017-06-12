@@ -18,7 +18,6 @@ export class AppComponent {
     @ViewChildren("accordionHeader") accordionHeaders: QueryList<ElementRef>;
 
     name: string = "Slider Editor";
-    objectFromApi: string;
     width: number;
 
     get currentSlider(): Slider {
@@ -37,14 +36,9 @@ export class AppComponent {
 
     async ngOnInit() {
         let currentSite = await this.apiClient.getSiteAsync();
-        this.objectFromApi = currentSite;
-
         this.width = this.slideEditor.nativeElement.offsetWidth;
         if (currentSite && currentSite.SliderID)
             this.currentSlider = await this.apiClient.getSliderAsync(currentSite.SliderID); //from db            
-    }
-
-    ngAfterViewInit() {
     }
 
     async saveSlider() {

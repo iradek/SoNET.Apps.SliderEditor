@@ -16,13 +16,11 @@
         </p-accordionTab>
     </p-accordion>
 
+
     <p class="pull-right">
         <a (click)="addNewSliderItem()" class="btn btn-success" href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Slide</a>
     </p>
-    <p>
-        <input class="btn btn-danger" [disabled]="!canSave" type="button" (click)="saveSlider()" value="Save Slider" />
+    <p class="text-center btn-save">
+        <a class="btn btn-danger" [class.disabled]="!canSave" (click)="saveSlider()"><i class="fa fa-floppy-o"></i> Save Slider</a>
     </p>
-    <pre>
-{{objectFromApi|json }}
-</pre>
-    </div>
+</div>
