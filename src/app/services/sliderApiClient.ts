@@ -3,8 +3,8 @@ import { HttpProxy } from "sonet-appskit";
 import { ApiClient } from "sonet-appskit";
 import { Slider } from "../models/slider";
 import { AppsConfig } from "sonet-appskit";
-import { SliderItem } from "app/models/sliderItem";
-import { UtilsService } from "app/services/utils.service";
+import { SliderItem } from "../models/sliderItem";
+import { UtilsService } from "./utils.service";
 
 @Injectable()
 export class SliderApiClient extends ApiClient {

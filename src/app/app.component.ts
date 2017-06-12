@@ -1,9 +1,9 @@
 import { Component, ViewChild, ViewChildren, QueryList, ElementRef, OnChanges } from "@angular/core";
 import { SliderApiClient } from "./services/sliderApiClient";
 import { EditSlider } from "./edit-slider/editSlider";
-import { Slider } from "app/models/slider";
-import { SliderItem } from "app/models/sliderItem";
-import { EditSliderItemComponent } from "app/edit-slider-item/edit-slider-item.component";
+import { Slider } from "./models/slider";
+import { SliderItem } from "./models/sliderItem";
+import { EditSliderItemComponent } from "./edit-slider-item/edit-slider-item.component";
 
 
 @Component({
@@ -80,7 +80,7 @@ export class AppComponent {
         setTimeout(() => this.accordionHeaders!.last!.nativeElement!.click(), 100);//wait for rendering tick
     }
 
-    trackSliderItem(index, sliderItem: SliderItem) {
+    trackSliderItem(index: number, sliderItem: SliderItem) {
         if (!sliderItem)
             return;
         return sliderItem.SliderItemID;

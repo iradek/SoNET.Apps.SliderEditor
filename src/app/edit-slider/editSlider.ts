@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Slider } from "../models/slider";
 import { ValidationService } from "sonet-appskit";
-import { SliderItem } from "app/models/sliderItem";
+import { SliderItem } from "../models/sliderItem";
 
 @Component({
     selector: "sonet-editSlider",

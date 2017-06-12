@@ -1,4 +1,4 @@
-import { SliderItem } from "app/models/sliderItem";
+import { SliderItem } from "./sliderItem";
 
 export class Slider {
     Interval: number;

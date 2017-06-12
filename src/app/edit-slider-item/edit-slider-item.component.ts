@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { SliderItem } from "app/models/sliderItem";
+import { SliderItem } from "../models/sliderItem";
 import { ImageCropperComponent, CropperSettings, Bounds } from "ng2-img-cropper";
-import { Slider } from "app/models/slider";
+import { Slider } from "../models/slider";
 import { UrlService } from "sonet-appskit";
 
 @Component({
