@@ -1,6 +1,6 @@
 ﻿<div #slideEditor>
-
     <sonet-busy-indicator></sonet-busy-indicator>
+    <p-growl [value]="messages"></p-growl>
     <p-accordion>
         <p-accordionTab header="General Slider Preferences" [selected]="true">
             <sonet-editSlider [sliderItemList]="currentSlider?.SliderItemList" #editSlider></sonet-editSlider>
@@ -16,11 +16,10 @@
         </p-accordionTab>
     </p-accordion>
 
-
-    <p class="pull-right">
+    <div class="text-right">
         <a (click)="addNewSliderItem()" class="btn btn-success" href="#"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add New Slide</a>
-    </p>
-    <p class="text-center btn-save">
+    </div>
+    <div class="text-center btn-save">
         <a class="btn btn-danger" [class.disabled]="!canSave" (click)="saveSlider()"><i class="fa fa-floppy-o"></i> Save Slider</a>
-    </p>
+    </div>
 </div>

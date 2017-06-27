@@ -4,6 +4,7 @@ import { EditSlider } from "./edit-slider/editSlider";
 import { Slider } from "./models/slider";
 import { SliderItem } from "./models/sliderItem";
 import { EditSliderItemComponent } from "./edit-slider-item/edit-slider-item.component";
+import { Message } from "primeng/components/common/api";
 
 
 @Component({
@@ -19,6 +20,7 @@ export class AppComponent {
 
     name: string = "Slider Editor";
     width: number;
+    messages : Message[] = [];
 
     get currentSlider(): Slider {
         return this.editSliderControl.getSliderObject();
@@ -65,6 +67,7 @@ export class AppComponent {
         if (!currentSite)
             throw new Error("Current Site is null which is not supported while saving a Slider.");
         await this.apiClient.saveSliderForSiteAsync(currentSite.SiteName, savedSlider.SliderID);
+        this.messages.push({severity:"success", summary:"Success", detail:"Your Slider was saved sucessfully"});
     }
 
     async deleteSliderItem(index: number) {

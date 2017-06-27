@@ -4,8 +4,9 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpModule } from "@angular/http";
 import { ReactiveFormsModule } from '@angular/forms';
 import { XHRBackend, RequestOptions } from "@angular/http";
-import { AccordionModule } from "primeng/components/accordion/accordion";
 import { SharedModule } from "primeng/components/common/shared";
+import { AccordionModule } from "primeng/components/accordion/accordion";
+import { GrowlModule } from 'primeng/components/growl/growl';
 
 import { SoNETAppsKitModule } from "sonet-appskit";
 import { HttpProxy } from "sonet-appskit"
@@ -24,7 +25,7 @@ import { ImageCropperComponent } from "ng2-img-cropper";
 import { UtilsService } from "./services/utils.service";
 
 @NgModule({
-    imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, AccordionModule, SharedModule],
+    imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, AccordionModule, SharedModule, GrowlModule],
     declarations: [AppComponent, EditSlider, EditSliderItemComponent, ImageCropperComponent],
     providers: [
         SliderApiClient,
