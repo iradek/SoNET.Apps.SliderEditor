@@ -17,4 +17,5 @@ export class Config implements AppsConfig {
     userPassword = "test123";
     passwordAlreadyEncrypted = false;
     oAuthGrant = OAuthGrant.ClientCredentials;
+    logging = true;
 }

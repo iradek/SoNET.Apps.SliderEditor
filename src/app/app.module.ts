@@ -9,7 +9,7 @@ import { AccordionModule } from "primeng/components/accordion/accordion";
 import { GrowlModule } from 'primeng/components/growl/growl';
 
 import { SoNETAppsKitModule } from "sonet-appskit";
-import { HttpProxy } from "sonet-appskit"
+import { SoNetProxy } from "sonet-appskit"
 import { OAuthService } from "sonet-appskit";
 import { UrlService } from "sonet-appskit";
 import { AppsConfig } from "sonet-appskit";
@@ -40,7 +40,7 @@ import { UtilsService } from "./services/utils.service";
             useFactory: appsConfigFactory
         },
         {
-            provide: HttpProxy,
+            provide: SoNetProxy,
             deps: [XHRBackend, RequestOptions, OAuthService, UrlService, Config],
             useFactory: httpProxyFactory
         }
@@ -53,7 +53,7 @@ export function appsConfigFactory(integrationService: IntegrationService) {
     return new Config(integrationService);
 }
 
-export function httpProxyFactory(backend: XHRBackend, options: RequestOptions, oAuthService: OAuthService, urlService: UrlService) {
-    return new HttpProxy(backend, options, oAuthService, urlService);
+export function httpProxyFactory(backend: XHRBackend, options: RequestOptions, oAuthService: OAuthService, urlService: UrlService, appsConfig: AppsConfig) {
+    return new SoNetProxy(backend, options, oAuthService, urlService, appsConfig);
 }
 
