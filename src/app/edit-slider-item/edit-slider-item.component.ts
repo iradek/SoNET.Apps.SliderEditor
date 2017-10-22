@@ -41,6 +41,7 @@ export class EditSliderItemComponent implements OnInit {
     get cropperSettings() {
         if (this._cropperSettings == null) {
             this._cropperSettings = new CropperSettings();
+            this._cropperSettings.noFileInput = true;
             this._cropperSettings.width = this.finalWidth;
             this._cropperSettings.height = this.slider ? this.slider.Height : this.defaultHeight;
             this._cropperSettings.croppedWidth = this.finalWidth;
@@ -53,7 +54,7 @@ export class EditSliderItemComponent implements OnInit {
 
     get valid(): boolean {
         return this.imgSource != null;
-    }   
+    }
 
     get finalWidth(): number {
         return this.width > this.minWidth ? this.width : this.minWidth;
@@ -67,6 +68,8 @@ export class EditSliderItemComponent implements OnInit {
         this._imgSource = value;
     }
 
+    @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
+
     constructor(private formBuilder: FormBuilder, private urlService: UrlService) { }
 
     ngOnInit() {
@@ -77,12 +80,6 @@ export class EditSliderItemComponent implements OnInit {
         Object.assign(this.sliderItem, this.editSliderItemForm.value);
         return this.sliderItem;
     }
-
-    // setSliderItemObject(sliderItem: SliderItem, order: number) {
-    //     this.sliderItem = sliderItem;
-    //     if (sliderItem)
-    //         this.sliderItem.Order = order;
-    // }
 
     buildForm(): void {
         this.editSliderItemForm = this.formBuilder.group({
@@ -103,6 +100,18 @@ export class EditSliderItemComponent implements OnInit {
     imgCropped(bounds: Bounds) {
         //fired also when new image is loaded for cropping
         this.imgSource = null;
+    }
+
+    fileChangeListener($event) {
+        var image: any = new Image();
+        var file: File = $event.target.files[0];
+        var myReader: FileReader = new FileReader();
+        var that = this;
+        myReader.onloadend = function (loadEvent: any) {
+            image.src = loadEvent.target.result;
+            that.cropper.setImage(image);
+        };
+        myReader.readAsDataURL(file);
     }
 
 }
