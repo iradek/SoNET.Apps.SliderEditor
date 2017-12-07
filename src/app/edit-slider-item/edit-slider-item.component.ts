@@ -16,7 +16,7 @@ export class EditSliderItemComponent implements OnInit {
     minWidth: number = 800; //adjust based min width of all templates
     defaultHeight: number = 300;
     editSliderItemForm: FormGroup;
-    additionalProperties = { uriSchema: "http://" };    
+    additionalProperties = { uriSchema: "http://" };
 
     @Input()
     set sliderItem(value: SliderItem) {
@@ -79,8 +79,10 @@ export class EditSliderItemComponent implements OnInit {
 
     getSliderItemObject(): SliderItem {
         Object.assign(this.sliderItem, this.editSliderItemForm.value);
-        if (this.sliderItem.ButtonUrl)
-            this.sliderItem.ButtonUrl = this.additionalProperties.uriSchema + this.sliderItem.ButtonUrl;
+        if (this.sliderItem.ButtonUrl) {
+            let startsWithHttp = this.sliderItem.ButtonUrl.match(/^http[s]*:\/\//i);
+            this.sliderItem.ButtonUrl = (!startsWithHttp ? this.additionalProperties.uriSchema : "") + this.sliderItem.ButtonUrl;
+        }
         return this.sliderItem;
     }
 
@@ -100,7 +102,8 @@ export class EditSliderItemComponent implements OnInit {
             this.imgSource = this.urlService.resolveFinalUrl(instance.ImagePath);
         if (instance.ButtonUrl) {
             let match = instance.ButtonUrl.match(/^(http[s]*:\/\/).+$/i);
-            this.additionalProperties.uriSchema = match[1];
+            if (match)
+                this.additionalProperties.uriSchema = match[1];
             instance.ButtonUrl = instance.ButtonUrl.replace(/^http[s]*:\/\//i, "");
         }
     }
