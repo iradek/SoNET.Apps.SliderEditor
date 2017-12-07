@@ -10,8 +10,8 @@ import { OAuthGrant } from "sonet-appskit";
 export class Config implements AppsConfig {
     constructor(private integrationService: IntegrationService) {}
     api_baseUrl = "http://hpdesk:82";
-    oauth_client_id =  "8f10e303-e051-4ee0-822a-627f6471da73";
-    oauth_client_secret = "OciYMVgGyxCvREXXy6cwNQ";
+    oauth_client_id =  "4012b7d1-359f-48ca-8d46-2349fe9c8370";
+    oauth_client_secret = "jeLoQVhIK8FMuvCWEWRFdQ";
     siteName = "SampleSite";
     userName = "Admin";
     userPassword = "test123";

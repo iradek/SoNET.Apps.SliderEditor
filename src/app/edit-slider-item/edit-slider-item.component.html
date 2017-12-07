@@ -1,13 +1,14 @@
 <form [formGroup]="editSliderItemForm" class="form-horizontal">
     <fieldset>
-        <div #imgContainer class="form-group">
+        <div #imgContainer class="form-group text-center">
             <label class="control-label">Image:</label>
-
             <div class="file-upload">
                 <input id="custom-input" type="file" (change)="fileChangeListener($event)">
             </div>
-            <img-cropper #cropper [hidden]="!imagedata?.image" [image]="imagedata" [settings]="cropperSettings" (onCrop)="imgCropped($event)"></img-cropper><br>
-            <img *ngIf="imgSource" [src]="imgSource" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+            <img-cropper #cropper [hidden]="!imagedata?.image" [image]="imagedata" [settings]="cropperSettings" (onCrop)="imgCropped($event)"></img-cropper>
+            <br>
+            <img class="sonet-slider-croppedImage" [style.width.px]="finalWidth" *ngIf="imgSource" [src]="imgSource" [width]="cropperSettings.croppedWidth"
+                [height]="cropperSettings.croppedHeight">
         </div>
 
         <!-- Text input-->
@@ -22,7 +23,7 @@
 
         <!-- Textarea -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="txtTagMessage">Slide Message:</label>
+            <label class="col-md-4 control-label" for="txtTagMessage">Slide Sub-Title:</label>
             <div class="col-md-4">
                 <textarea class="form-control" id="txtTagMessage" formControlName="TagMessage"></textarea>
             </div>
@@ -41,8 +42,15 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="txtButtonUrl">Button Url:</label>
             <div class="col-md-5">
-                <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind the button" class="form-control input-md">
-                <span class="help-block">Users are redirected to above Url when button is clicked</span>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <select [(ngModel)]="additionalProperties.uriSchema" [ngModelOptions]="{standalone: true}" name="uriSchema">
+                            <option value="http://">http://</option>
+                            <option value="https://">https://</option>
+                        </select>
+                    </span>
+                    <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind the button" class="form-control input-md">
+                </div>
             </div>
         </div>
 
