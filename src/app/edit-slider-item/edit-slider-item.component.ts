@@ -35,6 +35,9 @@ export class EditSliderItemComponent implements OnInit {
     @Input()
     slider: Slider;
 
+    @Output() 
+    sliderChange = new EventEmitter<Slider>();
+
     @Input()
     width: number;
 
@@ -83,6 +86,8 @@ export class EditSliderItemComponent implements OnInit {
             let startsWithHttp = this.sliderItem.ButtonUrl.match(/^http[s]*:\/\//i);
             this.sliderItem.ButtonUrl = (!startsWithHttp ? this.additionalProperties.uriSchema : "") + this.sliderItem.ButtonUrl;
         }
+        this.slider.Width =  this.cropperSettings.croppedWidth; //pass back real cropped width
+        this.sliderChange.emit(this.slider);
         return this.sliderItem;
     }
 

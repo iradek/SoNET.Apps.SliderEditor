@@ -33,7 +33,7 @@ export class EditSlider implements OnInit {
 
     getSliderObject(): Slider {
         if (this.editSliderForm)
-            Object.assign(this.slider, this.editSliderForm.value);
+            Object.assign(this.slider, this.editSliderForm.value);       
         return this.slider;
     }
 

@@ -46,7 +46,7 @@ export class AppComponent {
     async saveSlider() {
         if (!this.currentSlider)
             return;
-        //save Slider
+        //save Slider        
         let savedSlider = await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);
         //save Slider Items
         let index: number = 0;
@@ -62,6 +62,8 @@ export class AppComponent {
                 await this.apiClient.uploadSliderItemImageAsync(savedSliderItem.SliderItemID, editSliderControl.imagedata.image);
             index++;
         }
+        //save additional properties acquired by the Slider
+        await this.apiClient.saveOrUpdateSliderAsync(this.currentSlider);
         //associate with a Site
         let currentSite = await this.apiClient.getSiteAsync();
         if (!currentSite)
