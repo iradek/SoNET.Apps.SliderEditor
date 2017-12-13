@@ -7,8 +7,13 @@
             </div>
             <img-cropper #cropper [hidden]="!imagedata?.image" [image]="imagedata" [settings]="cropperSettings" (onCrop)="imgCropped($event)"></img-cropper>
             <br>
-            <img class="sonet-slider-croppedImage" [style.width.px]="finalWidth" *ngIf="imgSource" [src]="imgSource" [width]="cropperSettings.croppedWidth"
+            <div class="sonet-slider-image" *ngIf="imgSource">
+                <div class="sonet-slider-overlay" [style.opacity]="additionalProperties.finalOpacity"></div>
+                <img class="sonet-slider-croppedImage" [src]="imgSource" [width]="cropperSettings.croppedWidth"
                 [height]="cropperSettings.croppedHeight">
+                <p-slider [(ngModel)]="additionalProperties.opacityValue" [ngModelOptions]="{standalone: true}"></p-slider>
+            </div>
+
         </div>
 
         <!-- Text input-->
@@ -47,13 +52,12 @@
                         <select [(ngModel)]="additionalProperties.uriSchema" [ngModelOptions]="{standalone: true}" name="uriSchema">
                             <option value="http://">http://</option>
                             <option value="https://">https://</option>
-                        </select>                        
+                        </select>
                     </span>
-                    <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind the button" class="form-control input-md">                    
+                    <input id="txtButtonUrl" formControlName="ButtonUrl" type="text" placeholder="enter url behind the button" class="form-control input-md">
                 </div>
                 <span class="help-block">This url will open when button is clicked</span>
             </div>
-        </div>
-
+        </div>    
     </fieldset>
 </form>

@@ -7,7 +7,7 @@ export class SliderItem {
     TagMessage: string;
     ButtonText: string;
     ButtonUrl: string;
-    OverylayStyle: string;
+    OverlayStyle: string;
     TagTitleStyle: string;
     TagMessageStyle: string;
     ButtonStyle: string;

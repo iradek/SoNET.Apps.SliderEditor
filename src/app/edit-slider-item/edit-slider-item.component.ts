@@ -13,10 +13,20 @@ import { UrlService } from "sonet-appskit";
 export class EditSliderItemComponent implements OnInit {
 
     imagedata: any = {};
-    minWidth: number = 800; //adjust based min width of all templates
+    minWidth: number = 800;
+    defaultOpacity: number = 0.4;
     defaultHeight: number = 300;
     editSliderItemForm: FormGroup;
-    additionalProperties = { uriSchema: "http://" };
+    additionalProperties = {
+        uriSchema: "http://",
+        opacityValue: (this.defaultOpacity * 100),
+        get finalOpacity(): number {
+            return this.opacityValue / 100;
+        },
+        set finalOpacity(value: number) {
+            this.opacityValue = value * 100;
+        }
+    };
 
     @Input()
     set sliderItem(value: SliderItem) {
@@ -35,7 +45,7 @@ export class EditSliderItemComponent implements OnInit {
     @Input()
     slider: Slider;
 
-    @Output() 
+    @Output()
     sliderChange = new EventEmitter<Slider>();
 
     @Input()
@@ -86,7 +96,9 @@ export class EditSliderItemComponent implements OnInit {
             let startsWithHttp = this.sliderItem.ButtonUrl.match(/^http[s]*:\/\//i);
             this.sliderItem.ButtonUrl = (!startsWithHttp ? this.additionalProperties.uriSchema : "") + this.sliderItem.ButtonUrl;
         }
-        this.slider.Width =  this.cropperSettings.croppedWidth; //pass back real cropped width
+        this.sliderItem.OverlayStyle = `opacity: ${this.additionalProperties.finalOpacity}`;
+        //pass back real cropped width
+        this.slider.Width = this.cropperSettings.croppedWidth;
         this.sliderChange.emit(this.slider);
         return this.sliderItem;
     }
@@ -111,6 +123,11 @@ export class EditSliderItemComponent implements OnInit {
                 this.additionalProperties.uriSchema = match[1];
             instance.ButtonUrl = instance.ButtonUrl.replace(/^http[s]*:\/\//i, "");
         }
+        if(instance.OverlayStyle) {
+            let match = instance.OverlayStyle.match(/opacity:\s+([0-9]*\.?[0-9]+);*/i);
+            if(match)
+                this.additionalProperties.finalOpacity = +match[1];
+        }        
     }
 
     imgCropped(bounds: Bounds) {
