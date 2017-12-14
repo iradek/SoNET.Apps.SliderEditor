@@ -1,6 +1,6 @@
 ﻿<div #slideEditor>
     <sonet-busy-indicator></sonet-busy-indicator>
-    <p-growl [value]="messages"></p-growl>
+    <p-growl [value]="messages" [immutable]= "false"></p-growl>
     <p-accordion>
         <p-accordionTab header="General Slider Preferences" [selected]="true">
             <sonet-editSlider [sliderItemList]="currentSlider?.SliderItemList" #editSlider></sonet-editSlider>
@@ -12,7 +12,7 @@
             <div style="text-align:right;">
                 <a href="#" class="btn btn-danger" (click)="deleteSliderItem(i)"><i class="fa fa-minus-circle" aria-hidden="true"></i> Delete This Slide</a>
             </div>
-            <sonet-edit-slider-item #editSliderItem [sliderItem]="sliderItem" [(slider)]="currentSlider" [width]="width"></sonet-edit-slider-item>
+            <sonet-edit-slider-item #editSliderItem [sliderItem]="sliderItem" [(slider)]="currentSlider"></sonet-edit-slider-item>
         </p-accordionTab>
     </p-accordion>
 

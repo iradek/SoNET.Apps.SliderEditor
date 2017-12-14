@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SliderItem } from "../models/sliderItem";
 import { ImageCropperComponent, CropperSettings, Bounds } from "ng2-img-cropper";
@@ -13,8 +13,9 @@ import { UrlService } from "sonet-appskit";
 export class EditSliderItemComponent implements OnInit {
 
     imagedata: any = {};
-    minWidth: number = 800;
+    minWidth: number = 650; //min content width of all templates
     defaultOpacity: number = 0.4;
+    averageAdminMenuWidth = 185;
     defaultHeight: number = 300;
     editSliderItemForm: FormGroup;
     additionalProperties = {
@@ -27,6 +28,8 @@ export class EditSliderItemComponent implements OnInit {
             this.opacityValue = value * 100;
         }
     };
+
+    @ViewChild("imgContainer") imgContainer: ElementRef;
 
     @Input()
     set sliderItem(value: SliderItem) {
@@ -48,17 +51,18 @@ export class EditSliderItemComponent implements OnInit {
     @Output()
     sliderChange = new EventEmitter<Slider>();
 
-    @Input()
-    width: number;
+    get width(): number {
+        return this.imgContainer.nativeElement.clientWidth;
+    }
 
     private _cropperSettings: CropperSettings;
     get cropperSettings() {
         if (this._cropperSettings == null) {
             this._cropperSettings = new CropperSettings();
             this._cropperSettings.noFileInput = true;
-            this._cropperSettings.width = this.finalWidth;
+            this._cropperSettings.width = this.finalWidth + this.averageAdminMenuWidth;
             this._cropperSettings.height = this.slider ? this.slider.Height : this.defaultHeight;
-            this._cropperSettings.croppedWidth = this.finalWidth;
+            this._cropperSettings.croppedWidth = this.finalWidth + this.averageAdminMenuWidth;
             this._cropperSettings.croppedHeight = this.slider ? this.slider.Height : this.defaultHeight;
             this._cropperSettings.canvasWidth = this.finalWidth;
             this._cropperSettings.canvasHeight = this.slider ? this.slider.Height : this.defaultHeight;
@@ -100,7 +104,7 @@ export class EditSliderItemComponent implements OnInit {
         //pass back real cropped width
         this.slider.Width = this.cropperSettings.croppedWidth;
         this.sliderChange.emit(this.slider);
-        return this.sliderItem;
+        return this.sliderItem;        
     }
 
     buildForm(): void {
@@ -123,11 +127,11 @@ export class EditSliderItemComponent implements OnInit {
                 this.additionalProperties.uriSchema = match[1];
             instance.ButtonUrl = instance.ButtonUrl.replace(/^http[s]*:\/\//i, "");
         }
-        if(instance.OverlayStyle) {
+        if (instance.OverlayStyle) {
             let match = instance.OverlayStyle.match(/opacity:\s+([0-9]*\.?[0-9]+);*/i);
-            if(match)
+            if (match)
                 this.additionalProperties.finalOpacity = +match[1];
-        }        
+        }
     }
 
     imgCropped(bounds: Bounds) {
@@ -135,7 +139,7 @@ export class EditSliderItemComponent implements OnInit {
         this.imgSource = null;
     }
 
-    fileChangeListener($event) {
+    fileChangeListener($event: any) {
         var image: any = new Image();
         var file: File = $event.target.files[0];
         var myReader: FileReader = new FileReader();
