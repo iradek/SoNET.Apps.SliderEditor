@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { APP_INITIALIZER } from '@angular/core';
 import { HttpModule } from "@angular/http";
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { XHRBackend, RequestOptions } from "@angular/http";
@@ -11,50 +12,56 @@ import { SliderModule } from "primeng/components/slider/slider";
 
 import { SoNETAppsKitModule } from "sonet-appskit";
 import { SoNetProxy } from "sonet-appskit"
-import { OAuthService } from "sonet-appskit";
-import { UrlService } from "sonet-appskit";
-import { AppsConfig } from "sonet-appskit";
-import { IntegrationService } from "sonet-appskit";
+import { SoNetOAuthService } from "sonet-appskit";
+import { SoNetUrlService } from "sonet-appskit";
+import { SoNetAppsConfig } from "sonet-appskit";
+import { SoNetIntegrationService } from "sonet-appskit";
+import { SoNetConfigService } from "sonet-appskit";
 
 import { SliderApiClient } from "./services/sliderApiClient";
 import { EditSlider } from "./edit-slider/editSlider";
 
-import { Config } from "../apps.config";
 import { AppComponent } from "./app.component";
 import { EditSliderItemComponent } from './edit-slider-item/edit-slider-item.component';
 import { ImageCropperComponent } from "ng2-img-cropper";
 import { UtilsService } from "./services/utils.service";
+import { Config } from "../apps.config";
 
 @NgModule({
     imports: [BrowserModule, SoNETAppsKitModule, BrowserAnimationsModule, HttpModule, ReactiveFormsModule, FormsModule, AccordionModule, SharedModule, GrowlModule, SliderModule],
     declarations: [AppComponent, EditSlider, EditSliderItemComponent, ImageCropperComponent],
     providers: [
         SliderApiClient,
-        OAuthService,
-        UrlService,
-        Config,
-        UtilsService,
-        IntegrationService,
+        SoNetOAuthService,
+        SoNetUrlService,
+        SoNetConfigService,        
+        SoNetProxy,        
+        //register custom SoNetAppsConfig which provides the settings from the code when you need to drive them dynamically
         {
-            provide: AppsConfig,
-            deps: [IntegrationService],
+            provide: SoNetAppsConfig,
+            deps: [SoNetConfigService],
             useFactory: appsConfigFactory
         },
+        //register configLoader to load the settings from a file; those override code-based SoNetAppsConfig settings when needed
         {
-            provide: SoNetProxy,
-            deps: [XHRBackend, RequestOptions, OAuthService, UrlService, Config],
-            useFactory: httpProxyFactory
-        }
+            provide: APP_INITIALIZER,
+            useFactory: configLoader,
+            deps: [SoNetConfigService],
+            multi: true
+        },
+        UtilsService,      
     ],
     bootstrap: [AppComponent]
 })
 export class SliderEditorAppModule { }
 
-export function appsConfigFactory(integrationService: IntegrationService) {
-    return new Config(integrationService);
+//point the loader to a file with configuration settings
+const configFilePath = 'assets/apps.config.json';
+export function configLoader(configService: SoNetConfigService) {
+    //Note: this factory needs to return a function that returns a promise
+    return () => configService.loadAsync(configFilePath);
 }
-
-export function httpProxyFactory(backend: XHRBackend, options: RequestOptions, oAuthService: OAuthService, urlService: UrlService, appsConfig: AppsConfig) {
-    return new SoNetProxy(backend, options, oAuthService, urlService, appsConfig);
+export function appsConfigFactory(configService: SoNetConfigService) {
+    return new Config(configService);
 }
 

@@ -1,15 +1,15 @@
 import { Injectable } from "@angular/core";
 import { SoNetProxy } from "sonet-appskit";
-import { ApiClient } from "sonet-appskit";
+import { SoNetApiClient } from "sonet-appskit";
 import { Slider } from "../models/slider";
-import { AppsConfig } from "sonet-appskit";
+import { SoNetAppsConfig } from "sonet-appskit";
 import { SliderItem } from "../models/sliderItem";
 import { UtilsService } from "./utils.service";
 
 @Injectable()
-export class SliderApiClient extends ApiClient {
+export class SliderApiClient extends SoNetApiClient {
 
-    constructor(protected soNetProxy: SoNetProxy, protected appsConfig: AppsConfig, private utilsService: UtilsService) {
+    constructor(protected soNetProxy: SoNetProxy, protected appsConfig: SoNetAppsConfig, private utilsService: UtilsService) {
         super(soNetProxy, appsConfig);
     }
 

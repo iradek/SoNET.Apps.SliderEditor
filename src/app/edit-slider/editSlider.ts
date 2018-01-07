@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Slider } from "../models/slider";
-import { ValidationService } from "sonet-appskit";
+import { SoNetValidationService } from "sonet-appskit";
 import { SliderItem } from "../models/sliderItem";
 
 @Component({
@@ -62,8 +62,8 @@ export class EditSlider implements OnInit {
     buildForm(): void {
         this.editSliderForm = this.formBuilder.group({
             "Disabled": [this.slider.Disabled || false, [Validators.required]],
-            "Height": [this.slider.Height, [Validators.required, Validators.minLength(1), Validators.maxLength(4), ValidationService.invalidNumber]],
-            "Interval": [this.slider.Interval, [Validators.required, Validators.minLength(1), Validators.maxLength(5), ValidationService.invalidNumber]],
+            "Height": [this.slider.Height, [Validators.required, Validators.minLength(1), Validators.maxLength(4), SoNetValidationService.invalidNumber]],
+            "Interval": [this.slider.Interval, [Validators.required, Validators.minLength(1), Validators.maxLength(5), SoNetValidationService.invalidNumber]],
             "ShowPrevNext": [this.slider.ShowPrevNext || false, [Validators.required]],
             "ShowSlideIndicators": [this.slider.ShowSlideIndicators || false, [Validators.required]]
         });

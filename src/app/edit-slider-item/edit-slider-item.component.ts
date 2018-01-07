@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { SliderItem } from "../models/sliderItem";
 import { ImageCropperComponent, CropperSettings, Bounds } from "ng2-img-cropper";
 import { Slider } from "../models/slider";
-import { UrlService } from "sonet-appskit";
+import { SoNetUrlService } from "sonet-appskit";
 
 @Component({
     selector: 'sonet-edit-slider-item',
@@ -88,7 +88,7 @@ export class EditSliderItemComponent implements OnInit {
 
     @ViewChild('cropper', undefined) cropper: ImageCropperComponent;
 
-    constructor(private formBuilder: FormBuilder, private urlService: UrlService) { }
+    constructor(private formBuilder: FormBuilder, private urlService: SoNetUrlService) { }
 
     ngOnInit() {
         this.buildForm();

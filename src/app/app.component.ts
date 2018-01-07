@@ -5,6 +5,8 @@ import { Slider } from "./models/slider";
 import { SliderItem } from "./models/sliderItem";
 import { EditSliderItemComponent } from "./edit-slider-item/edit-slider-item.component";
 import { Message } from "primeng/components/common/api";
+import { SoNetConfigService } from "sonet-appskit";
+
 declare var $: any;
 
 
@@ -33,14 +35,15 @@ export class AppComponent {
         return this.editSliderControl!.valid;
     }
 
-    constructor(private apiClient: SliderApiClient) {
+    constructor(private apiClient: SliderApiClient, private configService: SoNetConfigService) {
     }
 
-    async ngOnInit() {
+    async ngOnInit() {   
         let currentSite = await this.apiClient.getSiteAsync();
         if (currentSite && currentSite.SliderID)
             this.currentSlider = await this.apiClient.getSliderAsync(currentSite.SliderID); //from db     
         //$(this.btnSaveSlider.nativeElement).on('click', await this.saveSlider); //to be able to trigger 'click' outside of angular component; this.currentSlider is always null in that method this way
+
     }
 
     async saveSlider() {
