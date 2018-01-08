@@ -2,7 +2,7 @@
     "_comments": "You can edit this file to customize configuration values",
     "api_baseUrl": "",
     "oauth_client_id": "",
-    "oauth_client_secret": "jeLoQVhIK8FMuvCWEWRFdQ",
+    "oauth_client_secret": "",
     "siteName" : "SampleSite",
     "userName" : "Admin",
     "userPassword" : "",
